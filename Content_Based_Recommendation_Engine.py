@@ -207,3 +207,27 @@ if __name__ == '__main__':
     print("for userId={0}, 10 movies are recommended as follows:".format(u_id))
     print(engine.recommend(u_id))
     engine.evaluate()
+    
+    ###########################################################################
+    Recommending movies number: 10
+    Succeed in loading file!
+    Succeed in building train and test dataset!
+    Train: 70676, Test: 30160
+    Preparing movie metadata...
+    Succeed in preparing movie metadata!
+    for userId=3, 10 movies are recommended as follows:
+    movieId                                     title   year
+    778                                  Trainspotting  1996
+    953                          It's a Wonderful Life  1946
+    2997                          Being John Malkovich  1999
+    81834 Harry Potter and the Deathly Hallows: Part 1  2010
+    4034                                       Traffic  2000
+    2797                                           Big  1988
+    4022                                     Cast Away  2000
+    6870                                  Mystic River  2003
+    8784                                  Garden State  2004
+    2115          Indiana Jones and the Temple of Doom  1984
+    Evaluation start...
+    Precision = 0.1516
+    Recall = 0.0307
+    Coverage = 0.0229
