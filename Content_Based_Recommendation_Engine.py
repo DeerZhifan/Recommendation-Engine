@@ -10,6 +10,7 @@ class ContentBasedRecommender():
     #  初始化参数
     def __init__(self):
         #  为用户推荐10部电影
+        self.n_sim_movies = 10
         self.n_rec_movies = 10
 
         #  训练集与测试集
@@ -149,10 +150,10 @@ class ContentBasedRecommender():
         m_sim = pd.DataFrame(self.cosine_sim, columns=self.movies['movieId'], index=self.movies['movieId'])
         watched = [int(i) for i in self.train[u_id]]
 
-        for movie in watched:
-            if movie in m_sim.columns:
-                top_5 = list(m_sim.sort_values(movie, ascending=False).index[1:6])
-                for i in top_5:
+        for m_id in watched:
+            if m_id in m_sim.columns:
+                n_sim = list(m_sim.sort_values(m_id, ascending=False).index[1:self.n_sim_movies])
+                for i in n_sim:
                     if i not in watched:
                         rec.add(i)
 
@@ -210,19 +211,19 @@ if __name__ == '__main__':
     #  Preparing movie metadata...                                            #
     #  Succeed in preparing movie metadata!                                   #
     #  for userId=3, 10 movies are recommended as follows:                    #
-    #  movieId                                     title   year               #
-    #  778                                  Trainspotting  1996               #
-    #  953                          It's a Wonderful Life  1946               #
-    #  2997                          Being John Malkovich  1999               #
-    #  81834 Harry Potter and the Deathly Hallows: Part 1  2010               #
-    #  4034                                       Traffic  2000               #
-    #  2797                                           Big  1988               #
-    #  4022                                     Cast Away  2000               #
-    #  6870                                  Mystic River  2003               #
-    #  8784                                  Garden State  2004               #
-    #  2115          Indiana Jones and the Temple of Doom  1984               #
+    #  movieId                                       title   year             #
+    #  81834  Harry Potter and the Deathly Hallows: Part 1   2010             #
+    #  4886                                  Inc. Monsters   2001             #
+    #  588                                         Aladdin   1992             #
+    #  2078                                The Jungle Book   1967             #
+    #  5218                                        Ice Age   2002             #
+    #  2115           Indiana Jones and the Temple of Doom   1984             #
+    #  5816        Harry Potter and the Chamber of Secrets   2002             #
+    #  3751                                    Chicken Run   2000             #
+    #  1517    Austin Powers: International Man of Mystery   1997             #
+    #  45722    Pirates of the Caribbean: Dead Man's Chest   2006             #
     #  Evaluation start...                                                    #
-    #  Precision = 0.1516                                                     #
-    #  Recall = 0.0307                                                        #
-    #  Coverage = 0.0229                                                      #
+    #  Precision = 0.1641                                                     #
+    #  Recall = 0.0332                                                        #
+    #  Coverage = 0.0219                                                      #
     ###########################################################################
