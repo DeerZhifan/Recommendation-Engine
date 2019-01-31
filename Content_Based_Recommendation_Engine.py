@@ -74,7 +74,6 @@ class ContentBasedRecommender():
     def r_weight(self, m_metadata):
         v = m_metadata['r_cnt']
         r = m_metadata['r_avg']
-
         return v / (v + self.m) * r + self.m / (v + self.m) * self.c
 
     #  统计电影评分
@@ -93,7 +92,6 @@ class ContentBasedRecommender():
         df_r_avg = pd.DataFrame(r_avg, index=[0]).transpose().reset_index()
         df_r_cnt.columns = ['movieId', 'r_cnt']
         df_r_avg.columns = ['movieId', 'r_avg']
-
         r_cnt_avg = pd.merge(df_r_cnt, df_r_avg, how='left', on='movieId')
 
         return r_cnt_avg
@@ -117,7 +115,6 @@ class ContentBasedRecommender():
     #  清洗数据，获得电影元数据
     def movie_metadata(self, m_csv, r_csv, t_csv):
         print('Preparing movie metadata...')
-
         self.movies = pd.read_csv(m_csv)
         self.m_cnt  = len(self.movies)
 
@@ -169,7 +166,6 @@ class ContentBasedRecommender():
     #  推荐评估
     def evaluate(self):
         print('Evaluation start...')
-
         hit       = 0
         rec_cnt   = 0
         test_cnt  = 0
@@ -179,7 +175,6 @@ class ContentBasedRecommender():
             m_test = self.test[u_id]
             m_rec  = self.recommend(u_id)
             m_rec  = list(set(m_rec['movieId']))
-
             for movie in m_rec:
                 if str(movie) in m_test:
                     hit += 1
@@ -190,7 +185,6 @@ class ContentBasedRecommender():
         precision = hit / rec_cnt
         recall    = hit / test_cnt
         coverage  = len(m_all_rec) / self.m_cnt
-
         result = (precision, recall, coverage)
         print('Precision = %.4f\nRecall = %.4f\nCoverage = %.4f' % result)
 
